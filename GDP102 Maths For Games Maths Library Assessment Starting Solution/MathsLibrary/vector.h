@@ -20,7 +20,7 @@
  */
 class Vector2 {
 public:
-	// Add vector components here
+	//Vector components here
 	union
 	{
 		struct
@@ -100,7 +100,7 @@ class Vector4;
 
 class Vector3 {
 public:
-	// Add vector components here
+	// Vector components
 	union
 	{
 		struct
@@ -186,7 +186,7 @@ public:
  */
 class Vector4 {
 public:
-	// Add vector components here
+	// Vector components
 	union
 	{
 		struct
