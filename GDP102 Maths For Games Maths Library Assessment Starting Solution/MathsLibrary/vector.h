@@ -134,6 +134,7 @@ public:
 	
 	// Cross product
 	Vector3 cross(const Vector3& other) const;
+	static Vector3 cross(const Vector3& v1, const Vector3& v2);
 
 	// find the angle between two vectors in radians
 	float angleBetween(const Vector3& other) const;
