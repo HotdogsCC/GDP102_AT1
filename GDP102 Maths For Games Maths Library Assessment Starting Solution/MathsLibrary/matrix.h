@@ -73,6 +73,21 @@ public:
 class Matrix3 {
 public:
 	// Add matrix components here
+	union
+	{
+		struct
+		{
+			float m0, m1, m2, m3, m4, m5, m6, m7, m8;
+		};
+		float data[3][3] = { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+		struct
+		{
+			Vector3 xAxis;
+			Vector3 yAxis;
+			Vector3 zAxis;
+		};
+		Vector3 axis[3];
+	};
 
 	// Constructors
 	Matrix3();

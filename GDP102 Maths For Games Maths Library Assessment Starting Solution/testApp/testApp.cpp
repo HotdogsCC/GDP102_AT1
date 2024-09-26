@@ -3,14 +3,11 @@
 
 #include <iostream>
 #include "vector.h"
+#include "matrix.h"
 
 int main()
 {
-    Vector2 v0(2, 3);
-    Vector2 v1(4, 6);
+    Matrix3 mat(0,1,2,3,4,5,6,7,8);
 
-    Vector4 v2(0, 0, 0, 178.54f);
-    float mag = v2.magnitude();
-    //Vector2 v2 = v0 -= v1;
-    std::cout << mag;
+    std::cout << "[ " << mat.data[0][0] << mat.data[0][1] << mat.data[0][2] << " ]";
 }
