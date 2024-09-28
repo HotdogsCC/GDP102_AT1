@@ -22,7 +22,20 @@ class Matrix2
 public:
 
 	// Add matrix components here
-
+	union
+	{
+		struct
+		{
+			float m0, m1, m2, m3;
+		};
+		float data[2][2];
+		struct
+		{
+			Vector2 xAxis;
+			Vector2 yAxis;
+		};
+		Vector2 axis[2];
+	};
 	// Constructors
 	Matrix2();
 	Matrix2(float _00, float _01, float _10, float _11);
@@ -59,7 +72,13 @@ public:
 	void scale(float x, float y);
 	void scale(const Vector2& v);
 	// Convenience function declaration, provide implementation in the cpp file.
-	friend std::ostream& operator<< (std::ostream& os, const Matrix2& m);
+	friend std::ostream& operator<< (std::ostream& os, const Matrix2& m)
+	{
+		os << "[ " << m.xAxis[0] << " " << m.yAxis[0] << " ]\n";
+		os << "[ " << m.xAxis[1] << " " << m.yAxis[1] << " ]\n";
+
+		return os;
+	}
 };
 
 
@@ -79,7 +98,7 @@ public:
 		{
 			float m0, m1, m2, m3, m4, m5, m6, m7, m8;
 		};
-		float data[3][3] = { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+		float data[3][3];
 		struct
 		{
 			Vector3 xAxis;
@@ -146,7 +165,14 @@ public:
 	Vector3 operator * (const Vector3& v) const;
 
 	// Convenience function declaration, provide implementation in the cpp file.
-	friend std::ostream& operator<<(std::ostream& os,const Matrix3& m);
+	friend std::ostream& operator<<(std::ostream& os,const Matrix3& m)
+	{
+		os << "[ " << m.xAxis[0] << " " << m.yAxis[0] << " " << m.zAxis[0] << " ]\n";
+		os << "[ " << m.xAxis[1] << " " << m.yAxis[1] << " " << m.zAxis[1] << " ]\n";
+		os << "[ " << m.xAxis[2] << " " << m.yAxis[2] << " " << m.zAxis[2] << " ]\n";
+
+		return os;
+	}
 };
 
 
@@ -160,7 +186,22 @@ public:
 class Matrix4 {
 public:
 	// Add matrix components here
-
+	union
+	{
+		struct
+		{
+			float m0, m1, m2, m3, m4, m5, m6, m7, m8, m9, m10, m11, m12, m13, m14, m15;
+		};
+		float data[4][4];
+		struct
+		{
+			Vector4 xAxis;
+			Vector4 yAxis;
+			Vector4 zAxis;
+			Vector4 wAxis;
+		};
+		Vector4 axis[4];
+	};
 	// Constructors
 	Matrix4();
 	Matrix4(const Matrix4& other);
@@ -219,7 +260,15 @@ public:
 	Vector4 operator * (const Vector4& v) const;
 
 	// Convenience function declaration, provide implementation in the cpp file.
-	friend std::ostream& operator<< (std::ostream& os,const Matrix4& m);
+	friend std::ostream& operator<< (std::ostream& os, const Matrix4& m)
+	{
+		os << "[ " << m.xAxis[0] << " " << m.yAxis[0] << " " << m.zAxis[0] << " " << m.wAxis[0] << " ]\n";
+		os << "[ " << m.xAxis[1] << " " << m.yAxis[1] << " " << m.zAxis[1] << " " << m.wAxis[1] << " ]\n";
+		os << "[ " << m.xAxis[2] << " " << m.yAxis[2] << " " << m.zAxis[2] << " " << m.wAxis[2] << " ]\n";
+		os << "[ " << m.xAxis[3] << " " << m.yAxis[3] << " " << m.zAxis[3] << " " << m.wAxis[3] << " ]\n";
+
+		return os;
+	}
 };
 
 
