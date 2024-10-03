@@ -7,10 +7,17 @@
 
 int main()
 {
-    Matrix4 mat(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15);
-    std::cout << mat;
-    
+    const float PI = 3.14159265358979323846f;
+    Vector3 point(1, 0, 1);
+    Matrix3 rotMat;
+    rotMat.setIdentity();
 
+    rotMat.setRotateZ(4*PI/3);
+    
+    Vector3 result;
+    result = rotMat * point;
+
+    std::cout << result;
 
     
 }

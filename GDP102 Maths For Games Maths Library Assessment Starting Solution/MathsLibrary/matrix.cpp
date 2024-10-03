@@ -9,8 +9,8 @@ Matrix2::Matrix2()
 Matrix2::Matrix2(float _00, float _01, float _10, float _11)
 {
 	data[0][0] = _00;
-	data[1][0] = _01;
-	data[0][1] = _10;
+	data[0][1] = _01;
+	data[1][0] = _10;
 	data[1][1] = _11;
 }
 
@@ -79,6 +79,49 @@ Vector2 Matrix2::operator* (const Vector2& v) const
 
 }
 
+// Set the rotation
+void Matrix2::setRotate(float radians)
+{
+	xAxis = { cosf(radians), -sinf(radians) };
+	yAxis = { sinf(radians), cosf(radians) };
+}
+// Add to the rotation
+void Matrix2::rotate(float radians)
+{
+	Matrix2 m;
+	m.setRotate(radians);
+
+	*this = *this * m;
+}
+// Set the scaled components
+void Matrix2::setScaled(float x, float y)
+{
+	this->setIdentity();
+	data[0][0] = x;
+	data[1][1] = y;
+}
+void Matrix2::setScaled(const Vector2& v)
+{
+	this->setIdentity();
+	data[0][0] = v.x;
+	data[1][1] = v.y;
+}
+// Scale the scale components
+void Matrix2::scale(float x, float y)
+{
+	Matrix2 m;
+	m.setScaled(x, y);
+
+	*this = *this * m;
+}
+void Matrix2::scale(const Vector2& v)
+{
+	Matrix2 m;
+	m.setScaled(v);
+
+	*this = *this * m;
+}
+
 //Constructors
 Matrix3::Matrix3()
 {
@@ -91,15 +134,15 @@ Matrix3::Matrix3(float _00, float _01, float _02,
 	float _20, float _21, float _22)
 {
 	data[0][0] = _00;
-	data[1][0] = _01;
-	data[2][0] = _02;
+	data[0][1] = _01;
+	data[0][2] = _02;
 
-	data[0][1] = _10;
+	data[1][0] = _10;
 	data[1][1] = _11;
-	data[2][1] = _12;
+	data[1][2] = _12;
 
-	data[0][2] = _20;
-	data[1][2] = _21;
+	data[2][0] = _20;
+	data[2][1] = _21;
 	data[2][2] = _22;
 }
 
@@ -159,6 +202,115 @@ Matrix3 Matrix3::transposed() const
 	return result;
 }
 
+// Set the translation component
+void Matrix3::setTranslate(float x, float y)
+{
+	wAxis.x = x;
+	wAxis.y = y;
+}
+void Matrix3::setTranslate(const Vector2& other)
+{
+	wAxis.x = other.x;
+	wAxis.y = other.y;
+}
+
+// Add to the translation component
+void Matrix3::translate(float x, float y)
+{
+	wAxis.x += x;
+	wAxis.y += y;
+}
+void Matrix3::translate(const Vector2& other)
+{
+	wAxis.x += other.x;
+	wAxis.y += other.y;
+}
+
+// Set rotation using Euler representation
+void Matrix3::setEuler(float pitch, float yaw, float roll)
+{
+	setRotateZ(roll);
+	rotateY(yaw);
+	rotateX(pitch);
+}
+
+// Set the rotation around X,Y and Z
+void Matrix3::setRotateX(float radians)
+{
+	xAxis = { 1, 0, 0 };
+	yAxis = { 0, cosf(radians), -sinf(radians)};
+	zAxis = { 0, sinf(radians), cosf(radians)};
+}
+void Matrix3::setRotateY(float radians)
+{
+	xAxis = { cosf(radians), 0, sinf(radians) };
+	yAxis = { 0, 1, 0 };
+	zAxis = { -sinf(radians), 0, cosf(radians) };
+}
+void Matrix3::setRotateZ(float radians)
+{
+	xAxis = { cosf(radians), -sinf(radians), 0};
+	yAxis = { sinf(radians), cosf(radians), 0 };
+	zAxis = { 0, 0, 1 };
+}
+
+// Add to the rotation
+void Matrix3::rotateX(float radians)
+{
+	Matrix3 m;
+	m.setRotateX(radians);
+
+	*this = *this * m;
+}
+void Matrix3::rotateY(float radians)
+{
+	Matrix3 m;
+	m.setRotateY(radians);
+
+	*this = *this * m;
+}
+void Matrix3::rotateZ(float radians)
+{
+	Matrix3 m;
+	m.setRotateZ(radians);
+
+	*this = *this * m;
+}
+
+// Set the scaled components
+void Matrix3::setScaled(float x, float y, float z)
+{
+	this->setIdentity();
+	data[0][0] = x;
+	data[1][1] = y;
+	data[2][2] = z;
+}
+void Matrix3::setScaled(const Vector3& v)
+{
+	this->setIdentity();
+	data[0][0] = v.x;
+	data[1][1] = v.y;
+	data[2][2] = v.z;
+}
+
+// Scale the scale components
+void Matrix3::scale(float x, float y, float z)
+{
+	//Scaling matrix by creating matrix with set scale, and multiplying the existing one with the scale one
+	Matrix3 m;
+	m.setScaled(x, y, z);
+
+	*this = *this * m;
+}
+void Matrix3::scale(const Vector3& v)
+{
+	//Scaling matrix by creating matrix with set scale, and multiplying the existing one with the scale one
+	Matrix3 m;
+	m.setScaled(v.x, v.y, v.z);
+
+	*this = *this * m;
+}
+
 Matrix3 Matrix3::operator * (const Matrix3& other) const
 {
 	Matrix3 result;
@@ -204,23 +356,23 @@ Matrix4::Matrix4(float _00, float _01, float _02, float _03,
 	float _30, float _31, float _32, float _33)
 {
 	data[0][0] = _00;
-	data[1][0] = _01;
-	data[2][0] = _02;
-	data[3][0] = _03;
+	data[0][1] = _01;
+	data[0][2] = _02;
+	data[0][3] = _03;
 
-	data[0][1] = _10;
+	data[1][0] = _10;
 	data[1][1] = _11;
-	data[2][1] = _12;
-	data[3][1] = _13;
+	data[1][2] = _12;
+	data[1][3] = _13;
 
-	data[0][2] = _20;
-	data[1][2] = _21;
+	data[2][0] = _20;
+	data[2][1] = _21;
 	data[2][2] = _22;
-	data[3][2] = _23;
+	data[2][3] = _23;
 	
-	data[0][3] = _30;
-	data[1][3] = _31;
-	data[2][3] = _32;
+	data[3][0] = _30;
+	data[3][1] = _31;
+	data[3][2] = _32;
 	data[3][3] = _33;
 }
 
@@ -279,6 +431,120 @@ Matrix4 Matrix4::transposed() const
 	result.data[3][2] = temp;
 
 	return result;
+}
+
+// Set the translation component
+void Matrix4::setTranslate(float x, float y, float z)
+{
+	wAxis.x = x;
+	wAxis.y = y;
+	wAxis.z = z;
+}
+void Matrix4::setTranslate(const Vector3& other)
+{
+	wAxis.x = other.x;
+	wAxis.y = other.y;
+	wAxis.z = other.z;
+}
+
+// Add to the translation component
+void Matrix4::translate(float x, float y, float z)
+{
+	wAxis.x += x;
+	wAxis.y += y;
+	wAxis.z += z;
+}
+void Matrix4::translate(const Vector3& other)
+{
+	wAxis.x += other.x;
+	wAxis.y += other.y;
+	wAxis.z += other.z;
+}
+
+// Set rotation using Euler representation
+void Matrix4::setEuler(float pitch, float yaw, float roll)
+{
+	setRotateZ(roll);
+	rotateY(yaw);
+	rotateX(pitch);
+}
+
+// Set the rotation around X,Y and Z
+void Matrix4::setRotateX(float radians)
+{
+	xAxis = { 1, 0, 0, 0};
+	yAxis = { 0, cosf(radians), -sinf(radians), 0 };
+	zAxis = { 0, sinf(radians), cosf(radians), 0 };
+	wAxis = { 0,0,0,1 };
+}
+void Matrix4::setRotateY(float radians)
+{
+	xAxis = { cosf(radians), 0, sinf(radians), 0 };
+	yAxis = { 0, 1, 0, 0 };
+	zAxis = { -sinf(radians), 0, cosf(radians), 0 };
+	wAxis = { 0,0,0,1 };
+}
+void Matrix4::setRotateZ(float radians)
+{
+	xAxis = { cosf(radians), -sinf(radians), 0, 0 };
+	yAxis = { sinf(radians), cosf(radians), 0, 0 };
+	zAxis = { 0, 0, 1, 0 };
+	wAxis = { 0,0,0,1 };
+}
+
+// Add to the rotation
+void Matrix4::rotateX(float radians)
+{
+	Matrix4 m;
+	m.setRotateX(radians);
+
+	*this = *this * m;
+}
+void Matrix4::rotateY(float radians)
+{
+	Matrix4 m;
+	m.setRotateY(radians);
+
+	*this = *this * m;
+}
+void Matrix4::rotateZ(float radians)
+{
+	Matrix4 m;
+	m.setRotateZ(radians);
+
+	*this = *this * m;
+}
+
+// Set the scaled components
+void Matrix4::setScaled(float x, float y, float z)
+{
+	this->setIdentity();
+	data[0][0] = x;
+	data[1][1] = y;
+	data[2][2] = z;
+}
+void Matrix4::setScaled(const Vector3& v)
+{
+	this->setIdentity();
+	data[0][0] = v.x;
+	data[1][1] = v.y;
+	data[2][2] = v.z;
+}
+
+// Scale the scale components
+void Matrix4::scale(float x, float y, float z)
+{
+	Matrix4 m;
+	m.setScaled(x, y, z);
+
+	*this = *this * m;
+}
+void Matrix4::scale(const Vector3& v)
+{
+	Matrix4 m;
+	m.setScaled(v.x, v.y, v.z);
+
+	*this = *this * m;
 }
 
 Matrix4 Matrix4::operator * (const Matrix4& other) const

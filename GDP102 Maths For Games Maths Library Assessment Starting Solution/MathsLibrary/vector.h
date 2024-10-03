@@ -105,7 +105,11 @@ public:
 	{
 		struct
 		{
-			float x, y, z;
+			float x, y;
+			union
+			{
+				float z, w;
+			};
 		};
 		struct
 		{

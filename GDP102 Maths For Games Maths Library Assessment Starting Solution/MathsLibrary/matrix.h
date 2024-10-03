@@ -103,7 +103,11 @@ public:
 		{
 			Vector3 xAxis;
 			Vector3 yAxis;
-			Vector3 zAxis;
+			union
+			{
+				Vector3 zAxis;
+				Vector3 wAxis;
+			};
 		};
 		Vector3 axis[3];
 	};
