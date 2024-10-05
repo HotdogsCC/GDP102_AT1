@@ -1,4 +1,4 @@
-// testApp.cpp : This file contains the 'main' function. Program execution begins and ends there.
+// This was used for testing functionality and debugging. This file is not connected to the library
 //
 
 #include <iostream>

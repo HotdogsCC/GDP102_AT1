@@ -4,6 +4,10 @@
 
 int main()
 {
+    std::cout << "Hello! This is a test application to check the math library is working.\n";
+    std::cout << "The system will pause. Resume to run the unit tests\n\n";
+    system("pause");
+
     std::cout << "Running Unit Tests\n";
 
     // Run Vector unit tests
@@ -30,4 +34,7 @@ int main()
     {
         std::cout << "All unit tests passed" << std::endl;
     }
+
+    std::cout << "\nThe system is once again paused. Resuming will close this application\n\n";
+    system("pause");
 }

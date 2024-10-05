@@ -1,11 +1,11 @@
 #include "matrix.h"
 
+// Constructors
 Matrix2::Matrix2()
 {
 	//Sets the entire matrix to 0;
 	memset(this, 0, sizeof(float) * 2 * 2);
 }
-
 Matrix2::Matrix2(float _00, float _01, float _10, float _11)
 {
 	data[0][0] = _00;
@@ -13,28 +13,29 @@ Matrix2::Matrix2(float _00, float _01, float _10, float _11)
 	data[1][0] = _10;
 	data[1][1] = _11;
 }
-
 Matrix2::Matrix2(const Matrix2& other)
 {
 	memcpy(this, &other, sizeof(float) * 2 * 2);
 }
 
+// Assignment
 Matrix2& Matrix2::operator = (const Matrix2& other)
 {
 	memcpy(this, &other, sizeof(float) * 2 * 2);
 	return *this;
 }
 
+// Indexing operators to retrieve columns
 Vector2& Matrix2::operator[] (int index)
 {
 	return axis[index];
 }
-
 const Vector2& Matrix2::operator[] (int index) const
 {
 	return axis[index];
 }
 
+// Sets the matrix to an identiy matrix
 void Matrix2::setIdentity()
 {
 	data[0][0] = 1;
@@ -43,6 +44,7 @@ void Matrix2::setIdentity()
 	data[1][1] = 1;
 }
 
+// Returns transpose of this matrix
 Matrix2 Matrix2::transposed() const
 {
 	Matrix2 result(*this);
@@ -55,6 +57,7 @@ Matrix2 Matrix2::transposed() const
 	return result;
 }
 
+// Returns this matrix multiplied by 'other'
 Matrix2 Matrix2::operator * (const Matrix2& other) const
 {
 	Matrix2 result;
@@ -68,6 +71,7 @@ Matrix2 Matrix2::operator * (const Matrix2& other) const
 	return result;
 }
 
+// Multiplies other by this matrix and returns the result
 Vector2 Matrix2::operator* (const Vector2& v) const
 {
 	Vector2 result;
@@ -85,6 +89,7 @@ void Matrix2::setRotate(float radians)
 	xAxis = { cosf(radians), -sinf(radians) };
 	yAxis = { sinf(radians), cosf(radians) };
 }
+
 // Add to the rotation
 void Matrix2::rotate(float radians)
 {
@@ -93,6 +98,7 @@ void Matrix2::rotate(float radians)
 
 	*this = *this * m;
 }
+
 // Set the scaled components
 void Matrix2::setScaled(float x, float y)
 {
@@ -106,6 +112,7 @@ void Matrix2::setScaled(const Vector2& v)
 	data[0][0] = v.x;
 	data[1][1] = v.y;
 }
+
 // Scale the scale components
 void Matrix2::scale(float x, float y)
 {
@@ -128,7 +135,6 @@ Matrix3::Matrix3()
 	//Sets the entire matrix to 0;
 	memset(this, 0, sizeof(float) * 3 * 3);
 }
-
 Matrix3::Matrix3(float _00, float _01, float _02,
 	float _10, float _11, float _12,
 	float _20, float _21, float _22)
@@ -145,28 +151,29 @@ Matrix3::Matrix3(float _00, float _01, float _02,
 	data[2][1] = _21;
 	data[2][2] = _22;
 }
-
 Matrix3::Matrix3(const Matrix3& other)
 {
 	memcpy(this, &other, sizeof(float) * 3 * 3);
 }
 
+// Assignment
 Matrix3& Matrix3::operator = (const Matrix3& other)
 {
 	memcpy(this, &other, sizeof(float) * 3 * 3);
 	return *this;
 }
 
+// Indexing operators to retrieve columns
 Vector3& Matrix3::operator [] (int index)
 {
 	return axis[index];
 }
-
 const Vector3& Matrix3::operator[] (int index) const
 {
 	return axis[index];
 }
 
+// Sets the matrix to an identiy matrix
 void Matrix3::setIdentity()
 {
 	data[0][0] = 1;
@@ -182,6 +189,7 @@ void Matrix3::setIdentity()
 	data[2][2] = 1;
 }
 
+// Returns transpose of this matrix
 Matrix3 Matrix3::transposed() const
 {
 	Matrix3 result(*this);
@@ -311,6 +319,7 @@ void Matrix3::scale(const Vector3& v)
 	*this = *this * m;
 }
 
+// Returns this matrix multiplied by 'other'
 Matrix3 Matrix3::operator * (const Matrix3& other) const
 {
 	Matrix3 result;
@@ -330,6 +339,7 @@ Matrix3 Matrix3::operator * (const Matrix3& other) const
 	return result;
 }
 
+// Multiplies Vector3 v by this matrix and returns the result
 Vector3 Matrix3::operator * (const Vector3& v) const
 {
 	Vector3 result;
@@ -339,17 +349,16 @@ Vector3 Matrix3::operator * (const Vector3& v) const
 	return result;
 }
 
+// Constructors
 Matrix4::Matrix4()
 {
 	//Sets the entire matrix to 0;
 	memset(this, 0, sizeof(float) * 4 * 4);
 }
-
 Matrix4::Matrix4(const Matrix4& other)
 {
 	memcpy(this, &other, sizeof(float) * 4 * 4);
 }
-
 Matrix4::Matrix4(float _00, float _01, float _02, float _03,
 	float _10, float _11, float _12, float _13,
 	float _20, float _21, float _22, float _23,
@@ -376,22 +385,24 @@ Matrix4::Matrix4(float _00, float _01, float _02, float _03,
 	data[3][3] = _33;
 }
 
+// Assignment
 Matrix4& Matrix4::operator = (const Matrix4& other)
 {
 	memcpy(this, &other, sizeof(float) * 4 * 4);
 	return *this;
 }
 
+// Indexing operators to retrieve columns
 Vector4& Matrix4::operator[] (int index)
 {
 	return axis[index];
 }
-
 const Vector4& Matrix4::operator[] (int index) const
 {
 	return axis[index];
 }
 
+// Sets matrix to an identity matrix
 void Matrix4::setIdentity()
 {
 	memset(this, 0, sizeof(float) * 4 * 4);
@@ -401,6 +412,7 @@ void Matrix4::setIdentity()
 	data[3][3] = 1;
 }
 
+// Returns transpose of this matrix
 Matrix4 Matrix4::transposed() const
 {
 	Matrix4 result(*this);
@@ -547,6 +559,7 @@ void Matrix4::scale(const Vector3& v)
 	*this = *this * m;
 }
 
+// Returns this matrix multiplied by 'other'
 Matrix4 Matrix4::operator * (const Matrix4& other) const
 {
 	Matrix4 result;
@@ -574,6 +587,7 @@ Matrix4 Matrix4::operator * (const Matrix4& other) const
 	return result;
 }
 
+// Multiplies Vector4 v by this matrix and returns the result
 Vector4 Matrix4::operator * (const Vector4& v) const
 {
 	Vector4 result;

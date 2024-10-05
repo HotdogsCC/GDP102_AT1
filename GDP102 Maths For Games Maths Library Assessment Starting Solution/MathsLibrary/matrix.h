@@ -50,6 +50,7 @@ public:
 	// Indexing operators to retrieve columns
 	const Vector2& operator[] (int index) const;
 
+	// Sets the matrix to an identiy matrix
 	void setIdentity();
 
 	// Returns transpose of this matrix
@@ -128,6 +129,7 @@ public:
 	// Indexing operators to retrieve columns
 	const Vector3& operator[] (int index) const;
 
+	// Sets the matrix to an identiy matrix
 	void setIdentity();
 
 	// Returns transpose of this matrix
@@ -223,6 +225,7 @@ public:
 	// Indexing operators to retrieve columns
 	const Vector4& operator[] (int index) const;
 
+	// Sets matrix to an identity matrix
 	void setIdentity();
 
 	// Returns transpose of this matrix
